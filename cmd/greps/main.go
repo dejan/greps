@@ -8,8 +8,12 @@ import (
 )
 
 const (
-	clear   = "\r                   \r"
-	skipped = " lines skipped"
+	clear          = "\r                   \r"
+	fgCyan         = "\033[0;36m"
+	bgRed          = "\033[0;41m"
+	reset          = "\033[0m"
+	infoColor      = fgCyan
+	highlightColor = bgRed
 )
 
 func main() {
@@ -28,11 +32,16 @@ func main() {
 	for scanner.Scan() {
 		text := scanner.Text()
 		if reg.MatchString(text) {
-			fmt.Print(clear, text, "\n")
+			ht := reg.ReplaceAllStringFunc(text, highlight)
+			fmt.Print(clear, ht, "\n")
 		} else {
 			counter++
-			fmt.Print("\r", counter, skipped)
+			fmt.Print(infoColor, "\r", counter, " lines skipped", reset)
 		}
 	}
 	fmt.Println()
+}
+
+func highlight(s string) string {
+	return highlightColor + s + reset
 }
