@@ -13,3 +13,5 @@ It counts and displays the skipped lines, highlights matches.
 Just pipe some stream of data to it:
 
     tail -f /var/log/nginx/access.log | greps ohai
+
+![demo](doc/grepsdemo.gif)
